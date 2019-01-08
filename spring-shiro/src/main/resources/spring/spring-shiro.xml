@@ -8,12 +8,14 @@
         <property name="securityManager" ref="securityManager"/>
         <!-- 登录页url -->
         <property name="loginUrl" value="login.html"/>
-        <!-- 未认证跳转的url -->
+        <!-- 没有授权访问跳转的url -->
         <property name="unauthorizedUrl" value="403.html" />
         <!-- 过滤器链,顺序为从上到下 -->
         <!--
                 anon:无需认证访问的路径
                 authc:认证后才能访问的路径,所以 /* 一般放在最下面
+                user:认证后才能访问的路径,"记住我"的用户也被允许
+                当应用开启了rememberMe时,用户下次访问时可以是一个user,但不会是authc,因为authc是需要重新认证的
          -->
         <property name="filterChainDefinitions">
             <value>
@@ -23,7 +25,8 @@
                 <!--/testRole1 = roles["admin","user"]-->
                 /testRole2 = anyRoles["demoRole","user"]
                 /testPermission = perms["user:insert","user:update","user:select"]
-                /* = authc
+                <!--/* = authc-->
+                /* = user
             </value>
         </property>
         <!-- 配置自定义的AuthorizationFilter -->
